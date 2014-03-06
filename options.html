@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>options</title>
+		<meta name="description" content="" />
+		<script src="http://i0.sinaimg.cn/dy/js/jquery/jquery-1.7.2.min.js"></script>
+		<style>
+			body {
+				background: #DBE0E6;
+			}
+			.wrapper {
+				width: 500px;
+				height: 200px;
+				margin: 50px auto 0;
+				border: 1px solid #C5C5C5;
+				background: #fff;
+				border-radius: 5px;
+				padding: 10px;
+			}
+			.from-panel {
+				padding: 30px 0 0;
+				text-align: center;
+			}
+			.f-input {
+				height: 2em;
+				line-height: 1;
+				padding: 1px 10px;
+				border-radius: 3px;
+				outline: 0 none;
+				border: 1px solid #d5d5d5;
+				width: 15em;
+				font-size: 1.5em;
+			}
+			.wrapper header h1 {
+				text-align: left;
+				font-size: 16px;
+			}
+			.f-button {
+				height: 2em;
+				width: 8em;
+				text-align: center;
+				font-size: 1.5em;
+				cursor: pointer;
+				padding: 5px 10px;
+				border: 1px solid blue;
+				border-radius: 5px;
+			}
+			.button-file {
+				padding: 20px 0 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+			<header>
+				<h1>选项</h1>
+			</header>
+			<div class="from-panel">
+				<input name="app.key" placeholder="请输入授权码" class="f-input"/>
+				<div class="button-file">
+					<a href="javascript:;" id="active-handle">点此激活</a>
+				</div>
+			</div>
+		</div>
+		<script>
+			(function($, win) {
+				var send = function(param, callback) {
+					$.ajax({
+						url : "http://api.striblog.com/api/auth.json",
+						data : param,
+						dataType : "jsonp",
+						success : function(data) {
+							callback(data);
+						}
+					});
+				}
+				// check
+				var checkAppKey = function(e) {
+					var _appkey = $(':input[name=app.key]').val();
+					if (!_appkey) {
+						alert("请输入授权码！");
+						return;
+					}
+					send({
+						appkey : _appkey
+					}, function(data) {
+						if (data.code == "A0001") {
+							localStorage.setItem('xinqianduanAppKey',data.user.name);
+							alert("授权成功!");
+						}else{
+							alert(data.text);
+						}
+					})
+				};
+				$('#active-handle').bind("click", checkAppKey);
+			})(jQuery, window);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,17 @@
+{
+	"name": "木小乐的翻译工具",
+	"version": "1.0",
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"permissions": [
+		"tabs",
+		"contextMenus",
+		"notifications"
+	],
+	"manifest_version": 2,
+	"icons":{
+		"16":"16.png",
+		"48":"48.png"
+	}
+}
